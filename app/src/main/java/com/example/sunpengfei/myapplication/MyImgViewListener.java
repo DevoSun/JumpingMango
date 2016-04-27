@@ -11,24 +11,4 @@ public class MyImgViewListener{
 
     ListenerTwo listenerTwo;
 
-    public MyImgViewListener(){
-        listener = new Listener() {
-            @Override
-            public void listener(int position) {
-
-            }
-        };
-        listenerOne = new ListenerOne() {
-            @Override
-            public void listenerOne() {
-
-            }
-        };
-        listenerTwo = new ListenerTwo() {
-            @Override
-            public void listenerTwo() {
-
-            }
-        };
-    }
 }
