@@ -9,6 +9,4 @@ public class MyImgViewListener{
 
     ListenerOne listenerOne;
 
-    ListenerTwo listenerTwo;
-
 }
