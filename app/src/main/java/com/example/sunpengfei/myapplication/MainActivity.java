@@ -1,7 +1,12 @@
 
 package com.example.sunpengfei.myapplication;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -13,10 +18,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sunpengfei.com.example.sunpengfei.service.TestAidlService;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ServiceConnection{
 
     private ViewPager viewPager;
 
@@ -35,6 +42,18 @@ public class MainActivity extends FragmentActivity {
         llTab = (LinearLayout) findViewById(R.id.ll_bottom);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         initData();
+        startService();
+    }
+
+    private void startService(){
+        Intent intent = new Intent(this, TestAidlService.class);
+        bindService(intent, this, BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(this);
     }
 
     private void initData() {
@@ -107,6 +126,21 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        IMyAidlInterface.Stub binder = (IMyAidlInterface.Stub) service;
+        try {
+            binder.add(100,200);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+
     }
 
     public class MyAdapter extends FragmentPagerAdapter{
