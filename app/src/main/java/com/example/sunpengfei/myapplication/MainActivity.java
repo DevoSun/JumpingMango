@@ -53,7 +53,6 @@ public class MainActivity extends FragmentActivity implements ServiceConnection{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(this);
     }
 
     private void initData() {
@@ -140,7 +139,7 @@ public class MainActivity extends FragmentActivity implements ServiceConnection{
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-
+        unbindService(this);
     }
 
     public class MyAdapter extends FragmentPagerAdapter{
